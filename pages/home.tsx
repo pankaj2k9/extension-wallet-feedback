@@ -1,10 +1,8 @@
 import * as React from 'react';
 import type { NextPage } from 'next';
-import Container from '@mui/material/Container';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import Box, { BoxProps } from '@mui/material/Box';
-import Link from 'next/link';
 
 export const StyledBox = styled(Box)<BoxProps>`
   flex: 1;
@@ -27,7 +25,7 @@ export const HeadingWarpper = styled.div`
   img {
     width: 25px;
     height: 25px;
-    margin-right: 5px;
+    margin-right:5px;
   }
 `;
 
@@ -46,35 +44,18 @@ export const Paragraph = styled(Typography)<TypographyProps>`
 export const FooterWarpper = styled.div`
   position: absolute;
   bottom: 20px;
-  text-align: center;
+  text-align:center;
   img {
     width: 100px;
     height: auto;
   }
-`;
+`
 
 const Home: NextPage = () => {
   return (
-    <Container maxWidth="lg">
       <StyledBox>
-        <HeadingWarpper>
-          <img src="./assets/icons/home.png" alt="#" />
-          <Link href="/home">
-            <Heading>Homepage</Heading>
-          </Link>
-        </HeadingWarpper>
-        <Typography component="p" gutterBottom>
-          a web3 gateway to hidden experiences
-        </Typography>
-        <FooterWarpper>
-          <Typography component="p" gutterBottom>
-            powered by
-          </Typography>
-          <img src="./assets/images/logo.png" alt="#" />
-        </FooterWarpper>
+
       </StyledBox>
-    </Container>
   );
 };
-Home.displayName = 'Starter';
 export default Home;

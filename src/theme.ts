@@ -10,10 +10,10 @@ const theme:  any= createTheme({
      white: '#fff',
     },
     primary: {
-      main: '#556cd6',
+      main: '#33373B',
     },
     secondary: {
-      main: '#19857b',
+      main: '#F5F5F5',
     },
     error: {
       main: red.A400,
