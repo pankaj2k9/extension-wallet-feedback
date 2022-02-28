@@ -43,7 +43,7 @@ export const StyledButton = styled(Button)`
   border-color: ${({ theme }) => theme.palette.common.white};
   border-radius: 20px;
   text-transform: none;
-  color: ${({ theme }) => theme.palette.primary.main};
+  color: ${({ theme }) => theme.palette.primary.main}; 
   &:hover {
     background-color: ${({ theme }) => theme.palette.common.white};
     border-color: ${({ theme }) => theme.palette.common.white};

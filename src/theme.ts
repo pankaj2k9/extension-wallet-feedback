@@ -13,7 +13,7 @@ const theme:  any= createTheme({
       main: '#33373B',
     },
     secondary: {
-      main: '#F5F5F5',
+      main: '#885FFF',
     },
     error: {
       main: red.A400,
@@ -58,7 +58,7 @@ const theme:  any= createTheme({
     },
     h6: {
       fontWeight: 500,
-      fontSize: '1.25rem',
+      fontSize: '1.10rem',
       lineHeight: 1.6,
       letterSpacing: '0.0075em',
     },
@@ -82,11 +82,11 @@ const theme:  any= createTheme({
     },
 
     button: {
-      fontWeight: 500,
-      fontSize: '0.875rem',
+      fontWeight: 700,
+      fontSize: '0.675rem',
       lineHeight: 1.75,
       letterSpacing: '0.02857em',
-      textTransform: 'uppercase',
+      textTransform: 'none',
     },
   },
 });
