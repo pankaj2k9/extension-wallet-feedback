@@ -38,7 +38,7 @@ export const BannerBox = styled(Box)<BoxProps>`
   background-image: url('/assets/images/bg-image1.png');
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: 150%;
+  background-position: 100%;
   border-radius: 10px;
   h1 {
     color: ${({ theme }) => theme.palette.primary.main};
@@ -46,12 +46,12 @@ export const BannerBox = styled(Box)<BoxProps>`
   }
 ` as typeof Box;
 
-export const HalfBox = styled(Box)<BoxProps>`
+export const HalfBox = styled(Box)<BoxProps | any>`
   flex: 1;
   display: flex;
   height: 100%;
-  background-color: ${({ theme }) => theme.palette.secondary.main};
-  background-image: url('/assets/images/bg-image2.png');
+  background-color: ${({ theme, reversed }) => reversed ? '#EAEFFF' : theme.palette.secondary.main};
+  background-image: ${({  reversed }) => reversed ? 'none' : "url('/assets/images/bg-image2.png')"};
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 150%;
@@ -127,7 +127,7 @@ const Home: NextPage = () => {
   return (
     <Grid container>
       <Grid item xs={6} p={1} justifyContent="center" alignItems="stretch">
-        <HalfBox p={1} pb={3}>
+        <HalfBox p={1} pb={3} reversed>
           <Grid item xs={10}>
             <h1>Contacts</h1>
             <AvatarGroup max={4}>
