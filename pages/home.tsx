@@ -95,7 +95,6 @@ const Home: NextPage = () => {
         item
         xs={6}
         p={1}
-        direction="row"
         justifyContent="center"
         alignItems="stretch"
       >
@@ -139,7 +138,6 @@ const Home: NextPage = () => {
         item
         xs={6}
         p={1}
-        direction="row"
         justifyContent="center"
         alignItems="stretch"
       >
