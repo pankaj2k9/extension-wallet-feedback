@@ -7,6 +7,8 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import Box, { BoxProps } from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 export const BannerBox = styled(Box)<BoxProps>`
   flex: 1;
@@ -46,12 +48,53 @@ export const HalfBox = styled(Box)<BoxProps>`
   }
 ` as typeof Box;
 
-const Home: NextPage = () => {
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
   return (
-    <Grid container spacing={2} p={2}>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+
+const Home: NextPage = () => {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+  return (
+    <Grid container>
       <Grid
         item
         xs={6}
+        p={1}
         direction="row"
         justifyContent="center"
         alignItems="stretch"
@@ -95,6 +138,7 @@ const Home: NextPage = () => {
       <Grid
         item
         xs={6}
+        p={1}
         direction="row"
         justifyContent="center"
         alignItems="stretch"
@@ -109,7 +153,7 @@ const Home: NextPage = () => {
           </Grid>
         </HalfBox>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} p={1}>
         <BannerBox p={1}>
           <Grid item xs={5}>
             <h1>Start Creating your NFT Today</h1>
@@ -123,6 +167,26 @@ const Home: NextPage = () => {
           </Grid>
         </BannerBox>
       </Grid>
+
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            variant="fullWidth"
+            aria-label="basic tabs example"
+          >
+            <Tab label="Collectibles" {...a11yProps(0)} />
+            <Tab label="Transactions" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+        Transactions
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          Transactions
+        </TabPanel>
+      </Box>
     </Grid>
   );
 };
