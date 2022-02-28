@@ -13,12 +13,7 @@ import Avatar, { AvatarProps } from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import DoneIcon from '@mui/icons-material/Done';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-export const IMG = styled.img<{ size?: string }>`
-  margin: 10px;
-  flex: 1;
-  max-width: ${({ size }) => (size === 'small' ? '15px' : '25px')};
-  max-height: 25px;
-`;
+import { StyledAvatar , IMG } from './Style';
 export const NavWarpper = styled.div`
   display: flex;
   background-color: #f5f5f5;
@@ -63,9 +58,7 @@ export const StyledBox = styled(Box)<BoxProps>`
   background-color: ${({ theme }) => theme.palette.common.white};
 ` as typeof Box;
 
-export const StyledAvatar = styled(Avatar)<AvatarProps>`
-  background-color: #ffffff;
-`;
+
 
 export const MenuWarpper = styled.div``;
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {

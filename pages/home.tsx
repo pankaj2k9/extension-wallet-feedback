@@ -16,15 +16,20 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import RectangleIcon from '@mui/icons-material/Rectangle';
+import { StyledAvatar , IMG } from '../components/Style';
 
 import { collectiblesList, transactionsList } from '../data';
 
-export const IMG = styled.img<{ size?: string }>`
-  margin: 10px;
-  flex: 1;
-  max-width: ${({ size }) => (size === 'small' ? '15px' : '25px')};
-  max-height: 25px;
-`;
+export const HighlightedTypography = styled(Typography)<TypographyProps>`
+  span{
+    color: ${({ theme }) => theme.palette.secondary.main};
+  }
+  p {
+    font-size:${({ theme }) => theme.typography.body1.fontSize};
+  }
+
+` as typeof Typography;
+
 
 export const BannerBox = styled(Box)<BoxProps>`
   flex: 1;
@@ -200,58 +205,66 @@ const Home: NextPage = () => {
           <List>
             {collectibles &&
               collectibles.map((collect: Collectible, index: number) => {
-                return (<ListItem
-                  key={index}
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                      <ArrowForwardIosIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <RectangleIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={collect.title}
-                    secondary={`By ${collect.user}`}
-                  />
-                </ListItem>);
+                return (
+                  <ListItem
+                    key={index}
+                    secondaryAction={
+                      <IconButton edge="end" aria-label="delete">
+                        <ArrowForwardIosIcon />
+                      </IconButton>
+                    }
+                  >
+                    <ListItemAvatar>
+                      <StyledAvatar>
+                        <RectangleIcon color="primary" />
+                      </StyledAvatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      disableTypography
+                      primary={collect.title}
+                      secondary={
+                        <HighlightedTypography>
+                          By <span>{collect.user}</span>
+                        </HighlightedTypography>
+                      }
+                    />
+                  </ListItem>
+                );
               })}
           </List>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <List>
-
             {transactions &&
               transactions.map((transac: Transaction, index: number) => {
-                return (<ListItem
-                  key={index}
-                  secondaryAction={
-                    <IconButton edge="end" aria-label="delete">
-                       <p>3 days ago</p>
-                    </IconButton>
-                  }
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                    {transac.sent ? (
-                        <IMG src="./assets/icons/sent.png" alt="#" />
-                      ) : (
-                        <IMG src="./assets/icons/receive.png" alt="#" />
-                      )}
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={`${transac.amount} Near`}
-                    secondary={
-                      transac.sent
-                        ? `Sent to ${transac.user}`
-                        : `Receive ${transac.user}`
+                return (
+                  <ListItem
+                    key={index}
+                    secondaryAction={
+                      <IconButton edge="end" aria-label="delete">
+                        <HighlightedTypography><p>3 days ago</p></HighlightedTypography>
+                      </IconButton>
                     }
-                  />
-                </ListItem>);
+                  >
+                    <ListItemAvatar>
+                      <StyledAvatar>
+                        {transac.sent ? (
+                          <IMG src="./assets/icons/sent.png" alt="#" />
+                        ) : (
+                          <IMG src="./assets/icons/receive.png" alt="#" />
+                        )}
+                      </StyledAvatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={<HighlightedTypography><span>{transac.amount}</span> Near</HighlightedTypography>}
+                      secondary={
+                        <HighlightedTypography>
+                          {transac.sent ? 'Sent to' : 'Receive' } <span>{transac.user}</span>
+                        </HighlightedTypography>
+                      }
+                    />
+                  </ListItem>
+                );
               })}
           </List>
         </TabPanel>
