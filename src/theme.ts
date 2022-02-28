@@ -84,7 +84,7 @@ const theme:  any= createTheme({
     button: {
       fontWeight: 700,
       fontSize: '0.675rem',
-      lineHeight: 1.75,
+      lineHeight: 1.05,
       letterSpacing: '0.02857em',
       textTransform: 'none',
     },
