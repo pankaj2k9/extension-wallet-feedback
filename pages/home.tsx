@@ -10,6 +10,22 @@ import Button from '@mui/material/Button';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import IconButton from '@mui/material/IconButton';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import RectangleIcon from '@mui/icons-material/Rectangle';
+
+import { collectiblesList, transactionsList } from '../data';
+
+export const IMG = styled.img<{ size?: string }>`
+  margin: 10px;
+  flex: 1;
+  max-width: ${({ size }) => (size === 'small' ? '15px' : '25px')};
+  max-height: 25px;
+`;
+
 export const BannerBox = styled(Box)<BoxProps>`
   flex: 1;
   display: flex;
@@ -48,16 +64,24 @@ export const HalfBox = styled(Box)<BoxProps>`
   }
 ` as typeof Box;
 
-
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
 }
 
+interface Collectible {
+  title: string;
+  user: string;
+}
+interface Transaction {
+  amount: string;
+  user: string;
+  sent: boolean;
+}
+
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -66,11 +90,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {children}
     </div>
   );
 }
@@ -82,22 +102,26 @@ function a11yProps(index: number) {
   };
 }
 
-
 const Home: NextPage = () => {
   const [value, setValue] = React.useState(0);
-
+  const [collectibles, setCollectibles] = React.useState<Collectible[] | null>(
+    collectiblesList
+  );
+  const [transactions, setTransactions] = React.useState<Transaction[] | null>(
+    transactionsList
+  );
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  React.useEffect(() => {
+    setCollectibles(collectiblesList);
+    setTransactions(transactionsList);
+  }, [collectiblesList, transactionsList]);
+
+  console.log(collectibles);
   return (
     <Grid container>
-      <Grid
-        item
-        xs={6}
-        p={1}
-        justifyContent="center"
-        alignItems="stretch"
-      >
+      <Grid item xs={6} p={1} justifyContent="center" alignItems="stretch">
         <HalfBox p={1} pb={3}>
           <Grid item xs={10}>
             <h1>Contacts</h1>
@@ -134,13 +158,7 @@ const Home: NextPage = () => {
           </Grid>
         </HalfBox>
       </Grid>
-      <Grid
-        item
-        xs={6}
-        p={1}
-        justifyContent="center"
-        alignItems="stretch"
-      >
+      <Grid item xs={6} p={1} justifyContent="center" alignItems="stretch">
         <HalfBox p={1} pb={3}>
           <Grid item xs={10}>
             <h1>web3 Apps</h1>
@@ -179,10 +197,63 @@ const Home: NextPage = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-        Transactions
+          <List>
+            {collectibles &&
+              collectibles.map((collect: Collectible, index: number) => {
+                return (<ListItem
+                  key={index}
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                      <ArrowForwardIosIcon />
+                    </IconButton>
+                  }
+                >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <RectangleIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={collect.title}
+                    secondary={`By ${collect.user}`}
+                  />
+                </ListItem>);
+              })}
+          </List>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Transactions
+          <List>
+
+            {transactions &&
+              transactions.map((transac: Transaction, index: number) => {
+                return (<ListItem
+                  key={index}
+                  secondaryAction={
+                    <IconButton edge="end" aria-label="delete">
+                       <p>3 days ago</p>
+                    </IconButton>
+                  }
+                >
+                  <ListItemAvatar>
+                    <Avatar>
+                    {transac.sent ? (
+                        <IMG src="./assets/icons/sent.png" alt="#" />
+                      ) : (
+                        <IMG src="./assets/icons/receive.png" alt="#" />
+                      )}
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={`${transac.amount} Near`}
+                    secondary={
+                      transac.sent
+                        ? `Sent to ${transac.user}`
+                        : `Receive ${transac.user}`
+                    }
+                  />
+                </ListItem>);
+              })}
+          </List>
         </TabPanel>
       </Box>
     </Grid>
